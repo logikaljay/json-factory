@@ -75,7 +75,8 @@ module.exports = schema => {
               schema: _schemas[schema].name,
               from: name,
               originalValue: item[prop].id,
-              property: prop
+              property: prop,
+              id: item[prop].id
             }
           }
 
