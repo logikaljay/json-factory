@@ -1,5 +1,21 @@
 
 <!---
+<div data-major="0" data-minor="3" data-patch="0" data-commit="f2cb1b3" class="release-body commit">
+-->
+
+# v0.3.0
+**jbaker** released this on *Mon Sep 25 2017 10:30:39 GMT+1300 (NZDT)* - 2 commits make up this release
+
+## Features
+* **Version:** new version for deploy (7dfe245)
+
+
+## Fixes
+* **Join:** add the id to the metadata (f2cb1b3)
+
+
+
+<!---
 <div data-major="0" data-minor="2" data-patch="0" data-commit="d801084" class="release-body commit">
 -->
 
