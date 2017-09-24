@@ -6,7 +6,7 @@ var _schemas = []
 var _instances = []
 var emitter = new EventEmitter()
 
-var extensions = fs.readdirSync(path.join('./src', 'extensions'))
+var extensions = fs.readdirSync(path.join(__dirname, 'extensions'))
 
 module.exports = schema => {
   class Factory {
