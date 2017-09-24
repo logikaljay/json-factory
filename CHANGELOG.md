@@ -1,5 +1,17 @@
 
 <!---
+<div data-major="0" data-minor="2" data-patch="0" data-commit="d801084" class="release-body commit">
+-->
+
+# v0.2.0
+**jbaker** released this on *Mon Sep 25 2017 10:26:20 GMT+1300 (NZDT)* - 1 commit makes up this release
+
+## Features
+* **Metadata:** cleaning up join metadata from entities (d801084)
+
+
+
+<!---
 <div data-major="0" data-minor="1" data-patch="0" data-commit="27e1b53" class="release-body commit">
 -->
 
