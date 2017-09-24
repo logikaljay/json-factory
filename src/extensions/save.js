@@ -22,19 +22,28 @@ module.exports = {
         }
       }
 
-      // iterate over item, checking for join meta data
+      // iterate over item, checking each one to see if it is a join
       var itemToWrite = {}
       for (var key in entity) {
-        if (entity[key]._join) {
-          if (key.startsWith('_')) {
-            continue
-          } else {
-            itemToWrite[key] = entity[`_${key}`].id
-          }
+        if (schema.joins.hasOwnProperty(key)) {
+          itemToWrite[key] = entity[key].id
         } else {
           itemToWrite[key] = entity[key]
         }
       }
+
+      // var itemToWrite = {}
+      // for (var key in entity) {
+      //   if (entity[key]._join) {
+      //     if (key.startsWith('_')) {
+      //       continue
+      //     } else {
+      //       itemToWrite[key] = entity[`_${key}`].id
+      //     }
+      //   } else {
+      //     itemToWrite[key] = entity[key]
+      //   }
+      // }
 
       fs.writeFileSync(
         path.join(schema.path, `${itemToWrite.id}.json`),

@@ -4,6 +4,8 @@ const EventEmitter = require('events')
 
 var _schemas = []
 var _instances = []
+var _joins = []
+
 var emitter = new EventEmitter()
 
 var extensions = fs.readdirSync(path.join(__dirname, 'extensions'))
@@ -54,37 +56,53 @@ module.exports = schema => {
         var data = _instances[schema][join.schema]
 
         this[name].forEach(item => {
-          if (item[prop]._join) {
+          // if (item[prop]._join) {
+          //   return
+          // }
+
+          if (
+            _joins.hasOwnProperty(name) &&
+            _joins[name].hasOwnProperty(prop)
+          ) {
             return
           }
 
           var joinData = data.filter(d => on(item, d))[0] || {}
 
-          // add some meta data to the join
-          joinData._join = true
-          joinData._schema = _schemas[schema].name
-          joinData._value = item[prop]
-          joinData._prop = prop
-          item[`_${prop}`] = joinData
+          // add some meta data to the joins array
+          _joins[name] = {
+            [prop]: {
+              schema: _schemas[schema].name,
+              from: name,
+              originalValue: item[prop].id,
+              property: prop
+            }
+          }
+
+          // joinData._join = true
+          // joinData._schema = _schemas[schema].name
+          // joinData._value = item[prop]
+          // joinData._prop = prop
+          // item[`_${prop}`] = joinData
 
           Object.defineProperty(item, prop, {
             get: function() {
-              return item[`_${prop}`]
+              // return item[`_${prop}`]
+
+              return (
+                data.filter(d => on({ [prop]: _joins[name][prop].id }, d))[0] ||
+                {}
+              )
             },
 
             set: function(val) {
-              var newJoinData = Object.assign(
-                {},
-                data.filter(d => on({ [prop]: val }, d))[0] || {},
-                {
-                  _join: true,
-                  _schema: _schemas[schema].name,
-                  _value: val,
-                  _prop: prop
-                }
-              )
-
-              item[`_${prop}`] = newJoinData
+              var newData = data.filter(d => on({ [prop]: val }, d))[0] || {}
+              _joins[name][prop] = Object.assign({}, newData, {
+                schema: _schemas[schema].name,
+                from: name,
+                originalValue: item[prop],
+                property: prop
+              })
             }
           })
         })
