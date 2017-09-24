@@ -1,5 +1,17 @@
 
 <!---
+<div data-major="0" data-minor="3" data-patch="1" data-commit="9c3e6b2" class="release-body commit">
+-->
+
+# v0.3.1
+**jbaker** released this on *Mon Sep 25 2017 10:54:02 GMT+1300 (NZDT)* - 1 commit makes up this release
+
+## Fixes
+* **Joins:** stop overwriting _joins metadata, assign instead (9c3e6b2)
+
+
+
+<!---
 <div data-major="0" data-minor="3" data-patch="0" data-commit="f2cb1b3" class="release-body commit">
 -->
 
