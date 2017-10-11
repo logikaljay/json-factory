@@ -1,5 +1,17 @@
 
 <!---
+<div data-major="0" data-minor="4" data-patch="0" data-commit="ffea951" class="release-body commit">
+-->
+
+# v0.4.0
+**jbaker** released this on *Wed Oct 11 2017 15:01:18 GMT+1300 (NZDT)* - 1 commit makes up this release
+
+## Features
+* **Browser:** getting this working in the browser (ffea951)
+
+
+
+<!---
 <div data-major="0" data-minor="3" data-patch="1" data-commit="9c3e6b2" class="release-body commit">
 -->
 
