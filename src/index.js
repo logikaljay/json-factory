@@ -1,128 +1,51 @@
 const fs = require('fs')
 const path = require('path')
 const EventEmitter = require('events')
+const Factory = require('./factory')
+var emitter = new EventEmitter()
 
 var _schemas = []
 var _instances = []
 var _joins = []
 
-var emitter = new EventEmitter()
-
-var extensions = fs.readdirSync(path.join(__dirname, 'extensions'))
+var extensions = [
+  require('./extensions/create'),
+  require('./extensions/first'),
+  require('./extensions/get'),
+  require('./extensions/limit'),
+  require('./extensions/save')
+]
 
 module.exports = schema => {
-  class Factory {
-    constructor() {
-      extensions.map(file => {
-        var extension = require(`./extensions/${file}`)
-        this[extension.name] = extension.func(this, schema, _instances)
-      })
-      ;(schema.extensions || []).map(extension => {
-        this[extension.name] = extension.func(this, schema, _instances)
-      })
+  var { name } = schema
+  var data = fs.readdirSync(schema.path).filter(f => f.endsWith('.json'))
 
-      this._schema = schema
-      _schemas[schema.name] = schema
-      this.load()
-      this.join()
-    }
-
-    load() {
-      var { name } = this._schema
-      var data = fs
-        .readdirSync(this._schema.path)
-        .filter(f => f.endsWith('.json'))
-
-      data = data
-        .map(item => {
-          try {
-            return require(path.join(this._schema.path, item))
-          } catch (err) {
-            return {}
-          }
-        })
-        .filter(q => q !== {})
-
-      this[name] = data
-
-      if (process.env.DEBUG) {
-        console.info(`[FACTORY] loaded ${name}`)
+  data = data
+    .map(item => {
+      try {
+        return require(path.join(schema.path, item))
+      } catch (err) {
+        return {}
       }
-    }
+    })
+    .filter(q => q !== {})
 
-    join(entity) {
-      var { joins, name } = this._schema
-      if (!joins) {
-        return
-      }
+  this[name] = data
 
-      const doJoin = (schema, join, on, prop) => {
-        if (process.env.DEBUG) {
-          console.info(`[FACTORY] joining ${name}.${prop} => ${join.schema}`)
-        }
-
-        var data = _instances[schema][join.schema]
-
-        this[name].forEach(item => {
-          if (
-            _joins.hasOwnProperty(name) &&
-            _joins[name].hasOwnProperty(prop)
-          ) {
-            // console.log(`${name}.${prop} =`, 'join exists - skipping')
-            return
-          }
-
-          var joinData = data.filter(d => on(item, d))[0] || {}
-
-          // add some meta data to the joins array
-          _joins[name] = Object.assign({}, _joins[name], {
-            [prop]: {
-              schema: _schemas[schema].name,
-              from: name,
-              originalValue: joinData.id,
-              property: prop,
-              id: joinData.id
-            }
-          })
-
-          Object.defineProperty(item, prop, {
-            get: function() {
-              return (
-                data.filter(d => on({ [prop]: _joins[name][prop].id }, d))[0] ||
-                {}
-              )
-            },
-
-            set: function(val) {
-              var newData = data.filter(d => on({ [prop]: val }, d))[0] || {}
-              _joins[name][prop] = Object.assign({}, newData, {
-                schema: _schemas[schema].name,
-                from: name,
-                originalValue: item[prop],
-                property: prop
-              })
-            }
-          })
-        })
-      }
-
-      Object.keys(joins).map(prop => {
-        var join = joins[prop]
-        var { schema, on } = join
-
-        // wait for the load event from the related schema(s)
-        if (Object.keys(_instances).indexOf(schema) === -1) {
-          emitter.on(`load__${schema}`, () => {
-            doJoin(schema, join, on, prop)
-          })
-        } else {
-          doJoin(schema, join, on, prop)
-        }
-      })
-    }
+  if (process.env.DEBUG) {
+    console.info(`[FACTORY] loaded ${name}`)
   }
 
-  _instances[schema.name] = new Factory()
+  var factory = Factory(
+    schema,
+    extensions,
+    _instances,
+    _schemas,
+    _joins,
+    emitter,
+    data
+  )
+  _instances[schema.name] = new factory()
   emitter.emit(`load__${schema.name}`)
 
   return _instances[schema.name]

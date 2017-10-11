@@ -1,6 +1,3 @@
-const fs = require('fs')
-const path = require('path')
-
 module.exports = {
   name: 'save',
   func: (data, schema) => {
@@ -32,18 +29,8 @@ module.exports = {
         }
       }
 
-      // var itemToWrite = {}
-      // for (var key in entity) {
-      //   if (entity[key]._join) {
-      //     if (key.startsWith('_')) {
-      //       continue
-      //     } else {
-      //       itemToWrite[key] = entity[`_${key}`].id
-      //     }
-      //   } else {
-      //     itemToWrite[key] = entity[key]
-      //   }
-      // }
+      const fs = require('fs')
+      const path = require('path')
 
       fs.writeFileSync(
         path.join(schema.path, `${itemToWrite.id}.json`),

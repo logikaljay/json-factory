@@ -103,4 +103,15 @@ describe('JSON Extensions', () => {
     expect(quoteData.client).to.equal('2-client-b')
     done()
   })
+
+  it(`should limit the data correctly`, done => {
+    var ClientsFactory = require('../')({
+      name: 'clients',
+      path: path.resolve('./data/clients')
+    })
+
+    var limitedData = ClientsFactory.limit(0, 1)
+    expect(limitedData.length).to.equal(1)
+    done()
+  })
 })
