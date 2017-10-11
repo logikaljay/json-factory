@@ -1,5 +1,17 @@
 
 <!---
+<div data-major="0" data-minor="4" data-patch="3" data-commit="1a21551" class="release-body commit">
+-->
+
+# v0.4.3
+**jbaker** released this on *Wed Oct 11 2017 18:01:51 GMT+1300 (NZDT)* - 1 commit makes up this release
+
+## Fixes
+* **Joins:** fixing joins on multiple items (1a21551)
+
+
+
+<!---
 <div data-major="0" data-minor="4" data-patch="2" data-commit="8d10c9d" class="release-body commit">
 -->
 
