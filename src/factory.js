@@ -19,51 +19,9 @@ module.exports = (
       this._schema = schema
       _schemas[schema.name] = schema
 
-      // if (schema.data) {
-      //   this[schema.name] = schema.data
-      //   delete schema.data
-      //   this.join()
-      // } else if (schema.path) {
-      //   this.load()
-      //   this.join()
-      // } else {
-      //   console.log(
-      //     '[FACTORY] Could not load data, and no data was available in the schema'
-      //   )
-      //   return
-      // }
-
       this[schema.name] = data
       this.join()
     }
-
-    // load() {
-    //   if (!dom) {
-    //     const fs = require('fs')
-    //     const path = require('path')
-
-    //     var { name } = this._schema
-    //     var data = fs
-    //       .readdirSync(this._schema.path)
-    //       .filter(f => f.endsWith('.json'))
-
-    //     data = data
-    //       .map(item => {
-    //         try {
-    //           return require(path.join(this._schema.path, item))
-    //         } catch (err) {
-    //           return {}
-    //         }
-    //       })
-    //       .filter(q => q !== {})
-
-    //     this[name] = data
-
-    //     if (process.env.DEBUG) {
-    //       console.info(`[FACTORY] loaded ${name}`)
-    //     }
-    //   }
-    // }
 
     join(entity) {
       var { joins, name } = this._schema
@@ -72,18 +30,18 @@ module.exports = (
       }
 
       const doJoin = (schema, join, on, prop) => {
-        if (true) {
+        if (process.env.DEBUG) {
           console.info(`[FACTORY] joining ${name}.${prop} => ${join.schema}`)
         }
 
         var data = _instances[schema][join.schema]
 
         this[name].forEach(item => {
+          // if already joined - skip
           if (
             _joins.hasOwnProperty(name) &&
             _joins[name].hasOwnProperty(prop)
           ) {
-            // console.log(`${name}.${prop} =`, 'join exists - skipping')
             return
           }
 
