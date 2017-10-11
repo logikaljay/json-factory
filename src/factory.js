@@ -67,7 +67,6 @@ module.exports = (
 
     join(entity) {
       var { joins, name } = this._schema
-      console.log(joins)
       if (!joins) {
         return
       }
@@ -125,7 +124,6 @@ module.exports = (
       Object.keys(joins).map(prop => {
         var join = joins[prop]
         var { schema, on } = join
-        console.log(join)
 
         // wait for the load event from the related schema(s)
         if (Object.keys(_instances).indexOf(schema) === -1) {
