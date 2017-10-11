@@ -1,5 +1,17 @@
 
 <!---
+<div data-major="0" data-minor="4" data-patch="2" data-commit="8d10c9d" class="release-body commit">
+-->
+
+# v0.4.2
+**jbaker** released this on *Wed Oct 11 2017 15:09:47 GMT+1300 (NZDT)* - 1 commit makes up this release
+
+## Fixes
+* **Logging:** removing more logging (8d10c9d)
+
+
+
+<!---
 <div data-major="0" data-minor="4" data-patch="1" data-commit="51e4a88" class="release-body commit">
 -->
 

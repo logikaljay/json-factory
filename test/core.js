@@ -1,6 +1,7 @@
 const { expect } = require('code')
 const { describe, before, it } = require('mocha')
 const path = require('path')
+var fs = require('fs')
 
 const Factory = require('../')
 var QuotesFactory = Factory({

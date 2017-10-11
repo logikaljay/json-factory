@@ -34,48 +34,73 @@ module.exports = (
           console.info(`[FACTORY] joining ${name}.${prop} => ${join.schema}`)
         }
 
-        var data = _instances[schema][join.schema]
+        // if already joined - skip
+        if (_joins.hasOwnProperty(name) && _joins[name].hasOwnProperty(prop)) {
+          return
+        }
 
+        var data = _instances[schema][join.schema]
         this[name].forEach(item => {
-          // if already joined - skip
-          if (
-            _joins.hasOwnProperty(name) &&
-            _joins[name].hasOwnProperty(prop)
-          ) {
-            return
+          // debugger
+          // var joinData = data.filter(d => on(item, d))[0] || {}
+
+          if (!_joins.hasOwnProperty(item.id)) {
+            _joins[item.id] = {
+              [prop]: ''
+            }
           }
 
-          var joinData = data.filter(d => on(item, d))[0] || {}
+          // debugger
+
+          _joins[item.id][prop] = data.filter(d => on(item, d))[0] || {}
 
           // add some meta data to the joins array
-          _joins[name] = Object.assign({}, _joins[name], {
-            [prop]: {
-              schema: _schemas[schema].name,
-              from: name,
-              originalValue: joinData.id,
-              property: prop,
-              id: joinData.id
-            }
-          })
+          // _joins[name] = Object.assign({}, _joins[name], {
+          //   [prop]: {
+          //     schema: _schemas[schema].name,
+          //     from: name,
+          //     originalValue: joinData.id,
+          //     property: prop,
+          //     id: joinData.id
+          //   }
+          // })
 
-          Object.defineProperty(item, prop, {
-            get: function() {
-              return (
-                data.filter(d => on({ [prop]: _joins[name][prop].id }, d))[0] ||
-                {}
-              )
-            },
+          if (typeof item[prop] === 'string') {
+            Object.defineProperty(item, prop, {
+              get: () => {
+                // return data.filter(d => on(item, d))[0] || {}
+                return _joins[item.id][prop]
+              },
 
-            set: function(val) {
-              var newData = data.filter(d => on({ [prop]: val }, d))[0] || {}
-              _joins[name][prop] = Object.assign({}, newData, {
-                schema: _schemas[schema].name,
-                from: name,
-                originalValue: item[prop],
-                property: prop
-              })
-            }
-          })
+              set: val => {
+                if (typeof val === 'string') {
+                  val = { [prop]: val }
+                }
+
+                _joins[item.id][prop] = data.filter(d => on(val, d))[0] || {}
+              }
+            })
+          }
+          // item[prop] = joinData
+
+          // Object.defineProperty(item, prop, {
+          //   get: function() {
+          //     return (
+          //       data.filter(d => on({ [prop]: _joins[name][prop].id }, d))[0] ||
+          //       {}
+          //     )
+          //   },
+
+          //   set: function(val) {
+          //     var newData = data.filter(d => on({ [prop]: val }, d))[0] || {}
+          //     _joins[name][prop] = Object.assign({}, newData, {
+          //       schema: _schemas[schema].name,
+          //       from: name,
+          //       originalValue: item[prop],
+          //       property: prop
+          //     })
+          //   }
+          // })
         })
       }
 
