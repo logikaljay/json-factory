@@ -1,5 +1,7 @@
 # json-factory
 
+[![build status](https://travis-ci.org/logikaljay/json-factory.svg?branch=master)](https://travis-ci.org/logikaljay/json-factory)
+
 Super simple ORM for JSON objects in the browser, or JSON files on the server.
 
 ## Setup some fake data
