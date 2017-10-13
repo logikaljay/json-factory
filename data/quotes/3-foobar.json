@@ -1,1 +1,7 @@
-{"id":"3-foobar","number":3,"name":"foobar","price":200}
+{
+  "id": "3-foobar",
+  "number": 3,
+  "name": "foobar",
+  "price": 200,
+  "client": "1-client-a"
+}

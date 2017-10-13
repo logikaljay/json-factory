@@ -60,17 +60,16 @@ module.exports = (
           console.info(`[FACTORY] joining ${name}.${prop} => ${join.schema}`)
         }
 
-        // if already joined - skip
-        if (_joins.hasOwnProperty(name) && _joins[name].hasOwnProperty(prop)) {
-          return
-        }
-
         var data = _instances[schema][join.schema]
         this[name].forEach(item => {
-          if (!_joins.hasOwnProperty(item.id)) {
-            _joins[item.id] = {
-              [prop]: ''
-            }
+          // make sure we are not rejoining this if it is already joined
+          if (
+            _joins.hasOwnProperty(item.id) &&
+            _joins[item.id].hasOwnProperty(prop)
+          ) {
+            return
+          } else {
+            _joins[item.id] = { [prop]: '' }
           }
 
           if (Array.isArray(item[prop])) {

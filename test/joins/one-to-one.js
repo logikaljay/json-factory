@@ -24,8 +24,19 @@ describe('One-to-One joins', () => {
   it(`should load the joins correctly`, done => {
     var entity = QuotesFactory.first()
     expect(entity.client).to.be.object()
+    expect(entity.client.id).to.exist()
     done()
   })
+
+  // it(`should return an object if fetched by one-to-one join data`, done => {
+  //   var client = ClientsFactory.first(c => c.id === '2-client-b')
+  //   console.log(client)
+  //   var entity = QuotesFactory.first()
+  //   console.log(entity.)
+  //   expect(entity).to.exist()
+  //   expect(entity.client.id).to.equal(client.id)
+  //   done()
+  // })
 
   it(`should update join information after being set`, done => {
     var client = ClientsFactory.first(c => c.id === '2-client-b')

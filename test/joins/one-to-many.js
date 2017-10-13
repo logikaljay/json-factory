@@ -29,7 +29,15 @@ describe('One-to-Many joins', () => {
     done()
   })
 
-  it(`One-to-many joined property should have add/remove methods`, done => {
+  it(`should return an object if fetched by one-to-many join data`, done => {
+    var quote = QuotesFactory.first(q => q.id === '1-test-quote')
+    var entity = WorkOrdersFactory.first(w => w.quotes.indexOf(quote) > -1)
+    expect(entity).to.exist()
+    expect(entity.id).to.equal('1-work-order')
+    done()
+  })
+
+  it(`One-to-many joined property should have add/remove convenience methods`, done => {
     var workorder = WorkOrdersFactory.first()
     expect(workorder.quotes.add).to.be.function()
     expect(workorder.quotes.remove).to.be.function()
