@@ -1,5 +1,17 @@
 
 <!---
+<div data-major="0" data-minor="5" data-patch="2" data-commit="ee8535b" class="release-body commit">
+-->
+
+# v0.5.2
+**jbaker** released this on *Fri Oct 13 2017 18:00:27 GMT+1300 (NZDT)* - 1 commit makes up this release
+
+## Fixes
+* **Joins:** stop trying to join on already joined objects (ee8535b)
+
+
+
+<!---
 <div data-major="0" data-minor="5" data-patch="1" data-commit="4409f68" class="release-body commit">
 -->
 
