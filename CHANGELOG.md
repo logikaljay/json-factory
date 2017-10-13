@@ -1,5 +1,17 @@
 
 <!---
+<div data-major="0" data-minor="5" data-patch="1" data-commit="4409f68" class="release-body commit">
+-->
+
+# v0.5.1
+**jbaker** released this on *Fri Oct 13 2017 17:28:42 GMT+1300 (NZDT)* - 1 commit makes up this release
+
+## Fixes
+* **Joins:** adding convenience functions to one-to-many joins (4409f68)
+
+
+
+<!---
 <div data-major="0" data-minor="5" data-patch="0" data-commit="fdb8a28" class="release-body commit">
 -->
 
