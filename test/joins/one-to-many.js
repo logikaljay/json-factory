@@ -29,6 +29,59 @@ describe('One-to-Many joins', () => {
     done()
   })
 
+  it(`One-to-many joined property should have add/remove methods`, done => {
+    var workorder = WorkOrdersFactory.first()
+    expect(workorder.quotes.add).to.be.function()
+    expect(workorder.quotes.remove).to.be.function()
+    done()
+  })
+
+  it(`should handle adding an object in to a one-to-many joined object`, done => {
+    var workorder = WorkOrdersFactory.first()
+    var quote = QuotesFactory.first(q => q.id === '3-foobar')
+    workorder.quotes.add(quote)
+    expect(workorder.quotes.length).to.equal(3)
+    expect(workorder.quotes).to.contain(quote)
+    done()
+  })
+
+  it(`should handle removing an object in a one-to-many joined object`, done => {
+    var workorder = WorkOrdersFactory.first()
+    var quote = QuotesFactory.first(q => q.id === '3-foobar')
+    workorder.quotes.remove(quote)
+    expect(workorder.quotes.length).to.equal(2)
+    expect(workorder.quotes).to.not.contain(quote)
+    done()
+  })
+
+  it(`should throw an error when trying to add a non entity to a joined object`, done => {
+    var workorder = WorkOrdersFactory.first()
+    var fakeQuote = { foo: 'bar' }
+    expect(workorder.quotes.add.bind(null, fakeQuote)).to.throw(Error)
+    done()
+  })
+
+  it(`should throw an error when trying to remove a non entity from a joined object`, done => {
+    var workorder = WorkOrdersFactory.first()
+    var fakeQuote = { foo: 'bar' }
+    expect(workorder.quotes.remove.bind(null, fakeQuote)).to.throw(Error)
+    done()
+  })
+
+  it(`should throw an error when trying to add an entity that already exists`, done => {
+    var workorder = WorkOrdersFactory.first()
+    var quote = QuotesFactory.get(q => q.id === '1-test-quote')
+    expect(workorder.quotes.add.bind(null, quote)).to.throw(Error)
+    done()
+  })
+
+  it(`should throw an error when trying to remove an entity that doesn't exist`, done => {
+    var workorder = WorkOrdersFactory.first()
+    var quote = QuotesFactory.get(q => q.id === '3-foobar')
+    expect(workorder.quotes.remove.bind(null, quote)).to.throw(Error)
+    done()
+  })
+
   it(`should only save the join key, not their entire joined object`, done => {
     var workorder = WorkOrdersFactory.first()
     WorkOrdersFactory.save(workorder)

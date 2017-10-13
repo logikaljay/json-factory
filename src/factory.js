@@ -23,6 +23,32 @@ module.exports = (
       this.join()
     }
 
+    bindJoinMethods(obj) {
+      obj.remove = entity => {
+        if (!entity.hasOwnProperty('id')) {
+          throw new Error('Parameter is not a valid entity')
+        }
+
+        if (obj.indexOf(entity) > -1) {
+          obj.splice(obj.indexOf(entity), 1)
+        } else {
+          throw new Error('Entity does not exist in object')
+        }
+      }
+
+      obj.add = entity => {
+        if (!entity.hasOwnProperty('id')) {
+          throw new Error('Parameter is not a valid entity')
+        }
+
+        if (obj.indexOf(entity) === -1) {
+          obj.push(entity)
+        } else {
+          throw new Error('Entity already exists in object')
+        }
+      }
+    }
+
     join(entity) {
       var { joins, name } = this._schema
       if (!joins) {
@@ -84,6 +110,10 @@ module.exports = (
                 _joins[item.id][prop] = data.filter(d => on(val, d)) || []
               }
             })
+          }
+
+          if (Array.isArray(_joins[item.id][prop])) {
+            this.bindJoinMethods(_joins[item.id][prop])
           }
         })
       }
