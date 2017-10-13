@@ -8,8 +8,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha",
-    "test-cov": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec"
+    "test": "mocha test/**",
+    "test-cov":
+      "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec"
   },
   "author": "Jay Baker <logikal@gmail.com>",
   "license": "ISC",

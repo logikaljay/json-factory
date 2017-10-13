@@ -50,18 +50,18 @@ describe('JSON Extensions', () => {
     done()
   })
 
-  it(`should add a new entity to the store`, done => {
-    var entity = QuotesFactory.create('foobar', { price: 200 })
-    var result = QuotesFactory.save(entity)
-    expect(result).to.equal(true)
+  // it(`should add a new entity to the store`, done => {
+  //   var entity = QuotesFactory.create('foobar', { price: 200 })
+  //   var result = QuotesFactory.save(entity)
+  //   expect(result).to.equal(true)
 
-    var entityPath = path.join('./data/quotes', `${entity.id}.json`)
-    var exists = fs.existsSync(entityPath)
-    expect(exists).to.equal(true)
-    fs.unlinkSync(entityPath)
+  //   var entityPath = path.join('./data/quotes', `${entity.id}.json`)
+  //   var exists = fs.existsSync(entityPath)
+  //   expect(exists).to.equal(true)
+  //   fs.unlinkSync(entityPath)
 
-    done()
-  })
+  //   done()
+  // })
 
   it(`should update an entity on save`, done => {
     var randomPrice = Math.floor(Math.random() * 1000)
@@ -85,25 +85,6 @@ describe('JSON Extensions', () => {
     done()
   })
 
-  it(`should only save the join key, not their entire joint object`, done => {
-    var ClientsFactory = require('../')({
-      name: 'clients',
-      path: path.resolve('./data/clients')
-    })
-
-    var client = ClientsFactory.first(c => c.id === '2-client-b')
-    var quote = QuotesFactory.first(q => q.id === '1-test-quote')
-    quote.client = client.id
-    QuotesFactory.save(quote)
-
-    // remove the file from the require cache - as it has changed
-    var rawDataPath = path.join('../data/quotes/', '1-test-quote.json')
-    delete require.cache[require.resolve(rawDataPath)]
-    var quoteData = require(rawDataPath)
-    expect(quoteData.client).to.equal('2-client-b')
-    done()
-  })
-
   it(`should limit the data correctly`, done => {
     var ClientsFactory = require('../')({
       name: 'clients',
@@ -115,4 +96,3 @@ describe('JSON Extensions', () => {
     done()
   })
 })
-

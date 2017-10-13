@@ -31,20 +31,6 @@ describe('JSON Factory', () => {
     done()
   })
 
-  it(`should load the joins correctly`, done => {
-    var entity = QuotesFactory.first()
-    expect(entity.client).to.be.object()
-    done()
-  })
-
-  it(`should update join information after being set`, done => {
-    var client = ClientsFactory.first(c => c.id === '2-client-b')
-    var entity = QuotesFactory.first()
-    entity.client = '2-client-b'
-    expect(entity.client.name).to.equal(client.name)
-    done()
-  })
-
   it(`should load the extension methods`, done => {
     expect(QuotesFactory.create).to.exist()
 

@@ -41,32 +41,21 @@ module.exports = (
 
         var data = _instances[schema][join.schema]
         this[name].forEach(item => {
-          // debugger
-          // var joinData = data.filter(d => on(item, d))[0] || {}
-
           if (!_joins.hasOwnProperty(item.id)) {
             _joins[item.id] = {
               [prop]: ''
             }
           }
 
-          // debugger
+          if (Array.isArray(item[prop])) {
+            _joins[item.id][prop] = data.filter(d => on(item, d)) || []
+          } else {
+            _joins[item.id][prop] = data.filter(d => on(item, d))[0] || {}
+          }
 
-          _joins[item.id][prop] = data.filter(d => on(item, d))[0] || {}
-
-          // add some meta data to the joins array
-          // _joins[name] = Object.assign({}, _joins[name], {
-          //   [prop]: {
-          //     schema: _schemas[schema].name,
-          //     from: name,
-          //     originalValue: joinData.id,
-          //     property: prop,
-          //     id: joinData.id
-          //   }
-          // })
-
-          if (typeof item[prop] === 'string') {
+          if (_joins[item.id][prop].hasOwnProperty('id')) {
             Object.defineProperty(item, prop, {
+              configurable: true,
               get: () => {
                 // return data.filter(d => on(item, d))[0] || {}
                 return _joins[item.id][prop]
@@ -80,27 +69,22 @@ module.exports = (
                 _joins[item.id][prop] = data.filter(d => on(val, d))[0] || {}
               }
             })
+          } else if (Array.isArray(_joins[item.id][prop])) {
+            Object.defineProperty(item, prop, {
+              configurable: true,
+              get: () => {
+                return _joins[item.id][prop]
+              },
+
+              set: val => {
+                if (typeof val === 'string') {
+                  val = { [prop]: val }
+                }
+
+                _joins[item.id][prop] = data.filter(d => on(val, d)) || []
+              }
+            })
           }
-          // item[prop] = joinData
-
-          // Object.defineProperty(item, prop, {
-          //   get: function() {
-          //     return (
-          //       data.filter(d => on({ [prop]: _joins[name][prop].id }, d))[0] ||
-          //       {}
-          //     )
-          //   },
-
-          //   set: function(val) {
-          //     var newData = data.filter(d => on({ [prop]: val }, d))[0] || {}
-          //     _joins[name][prop] = Object.assign({}, newData, {
-          //       schema: _schemas[schema].name,
-          //       from: name,
-          //       originalValue: item[prop],
-          //       property: prop
-          //     })
-          //   }
-          // })
         })
       }
 

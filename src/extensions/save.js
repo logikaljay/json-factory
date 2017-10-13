@@ -23,7 +23,14 @@ module.exports = {
       var itemToWrite = {}
       for (var key in entity) {
         if (schema.joins.hasOwnProperty(key)) {
-          itemToWrite[key] = entity[key].id
+          if (Array.isArray(entity[key])) {
+            itemToWrite[key] = []
+            entity[key].forEach(join => {
+              itemToWrite[key].push(join.id)
+            })
+          } else {
+            itemToWrite[key] = entity[key].id
+          }
         } else {
           itemToWrite[key] = entity[key]
         }
