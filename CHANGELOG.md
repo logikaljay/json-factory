@@ -1,5 +1,21 @@
 
 <!---
+<div data-major="0" data-minor="5" data-patch="0" data-commit="fdb8a28" class="release-body commit">
+-->
+
+# v0.5.0
+**jbaker** released this on *Fri Oct 13 2017 16:58:08 GMT+1300 (NZDT)* - 2 commits make up this release
+
+## Features
+* **Joins:** adding one-to-many joins (fdb8a28)
+
+
+## Fixes
+* **README:** github markdown doens't allow scripts (7939a71)
+
+
+
+<!---
 <div data-major="0" data-minor="4" data-patch="3" data-commit="1a21551" class="release-body commit">
 -->
 
