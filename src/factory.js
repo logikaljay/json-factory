@@ -16,6 +16,10 @@ module.exports = (
         this[extension.name] = extension.func(this, schema, _instances)
       })
 
+      if (!schema.hasOwnProperty('joins')) {
+        schema.joins = {}
+      }
+
       this._schema = schema
       _schemas[schema.name] = schema
 
