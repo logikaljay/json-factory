@@ -13,10 +13,19 @@ module.exports = {
         return false
       }
 
+      // update the entity inside the schema if it exists
+      var updated = false
       for (var i in data[schema.name]) {
         if (data[schema.name][i].id === entity.id) {
           data[schema.name][i] = entity
+          updated = true
+          break
         }
+      }
+
+      // entity wasn't found in the dataset - add it
+      if (!updated) {
+        data[schema.name].push(entity)
       }
 
       // iterate over item, checking each one to see if it is a join
