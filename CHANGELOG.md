@@ -1,5 +1,17 @@
 
 <!---
+<div data-major="0" data-minor="5" data-patch="4" data-commit="1e391a1" class="release-body commit">
+-->
+
+# v0.5.4
+**jbaker** released this on *Tue Oct 17 2017 09:13:19 GMT+1300 (NZDT)* - 1 commit makes up this release
+
+## Fixes
+* **Save:** if entity doesn't exist, add it (1e391a1)
+
+
+
+<!---
 <div data-major="0" data-minor="5" data-patch="3" data-commit="35a0bc1" class="release-body commit">
 -->
 
