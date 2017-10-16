@@ -1,5 +1,18 @@
 
 <!---
+<div data-major="0" data-minor="5" data-patch="3" data-commit="35a0bc1" class="release-body commit">
+-->
+
+# v0.5.3
+**jbaker** released this on *Mon Oct 16 2017 15:35:42 GMT+1300 (NZDT)* - 2 commits make up this release
+
+## Fixes
+* **Joins:** fixing empty joins object causing errors (35a0bc1)
+* **Repo:** added repo link to package.json (cc9b057)
+
+
+
+<!---
 <div data-major="0" data-minor="5" data-patch="2" data-commit="ee8535b" class="release-body commit">
 -->
 

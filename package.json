@@ -1,6 +1,6 @@
 {
   "name": "json-factory",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "",
   "main": "./src/index",
   "directories": {
@@ -9,8 +9,7 @@
   },
   "scripts": {
     "test": "mocha test/**",
-    "test-cov":
-      "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec test/**"
+    "test-cov": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec test/**"
   },
   "author": "Jay Baker <logikal@gmail.com>",
   "license": "ISC",
