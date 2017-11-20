@@ -1,0 +1,8 @@
+[ignore]
+<PROJECT_ROOT>/data/.*
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/flow-typed/.**
+
+[libs]
+flow-typed
+src/types

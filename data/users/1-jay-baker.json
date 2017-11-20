@@ -1,0 +1,7 @@
+{
+  "id": "1-jay-baker",
+  "name": "Jay Baker",
+  "age": 30,
+  "address": "5-kowhai-pl",
+  "permissions": ["1-read", "2-write", "3-delete"]
+}

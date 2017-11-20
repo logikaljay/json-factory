@@ -1,0 +1,7 @@
+{
+  "id": "2-john-smith",
+  "name": "John Smith",
+  "age": 45,
+  "address": "5-kowhai-pl",
+  "permissions": ["2-write"]
+}
